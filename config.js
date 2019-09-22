@@ -7,7 +7,10 @@ var GAME = {
   level : 1
 };
 
-var SPACE_SHIP = {
+var scissorsprite = new Image();
+scissorsprite.src = 
+
+var SHMECKEL = {
   initialized : false,
   bullets : [],
   latest : {

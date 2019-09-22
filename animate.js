@@ -6,7 +6,7 @@ function handleShmeckelAnimation() {
     SHMECKEL.y -=  SHMECKEL.speed;
   }
 
-  // Check if asteroid is leaving the boundary, if so, switch sides
+  // Check if scissors is leaving the boundary, if so, switch sides
   if (SHMECKEL.x > GAME.canvas.width) {
     SHMECKEL.x = 0;
   } else if (SHMECKEL.x < 0) {
@@ -19,24 +19,20 @@ function handleShmeckelAnimation() {
 }
 
 function handleScissorAnimation() {
-    SCISSORS.scissors.forEach(function(asteroid, index, object) {
+    SCISSORS.scissors.forEach(function(scissors, index, object) {
 
-        // Move the bullet forward
-          var radians = (Math.PI / 180) * asteroid.angle,
-              cos = Math.cos(radians),
-              sin = Math.sin(radians);
-          asteroid.x += SCISSORS.baseSpeed * sin;
-          asteroid.y +=  SCISSORS.baseSpeed * cos;
+        // Move the scissors forwar
+          scissors.x += SCISSORS.baseSpeed;
 
-          // Check if asteroid is leaving the boundary, if so, switch sides
-          if (asteroid.x > GAME.canvas.width) {
-            asteroid.x = 0;
-          } else if (asteroid.x < 0) {
-            asteroid.x = 600;
-          } else if (asteroid.y > GAME.canvas.height) {
-            asteroid.y = 0;
-          } else if (asteroid.y < 0) {
-            asteroid.y = 300;
+          // Check if scissors is leaving the boundary, if so, switch sides
+          if (scissors.x > GAME.canvas.width) {
+            scissors.x = 0;
+          } else if (scissors.x < 0) {
+            scissors.x = 600;
+          } else if (scissors.y > GAME.canvas.height) {
+            scissors.y = 0;
+          } else if (scissors.y < 0) {
+            scissors.y = 300;
           }
     });
 
@@ -46,15 +42,15 @@ function spaceShipAsteroidCollisionCheck() {
     var SHMECKEL_SIZE_BOX = 15; // 10px;
     var hit = false;
 
-    SCISSORS.scissors.forEach(function(asteroid) {
+    SCISSORS.scissors.forEach(function(scissors) {
       if (
-        SHMECKEL.latest.x + SHMECKEL_SIZE_BOX > asteroid.x &&
-        SHMECKEL.latest.x - SHMECKEL_SIZE_BOX < asteroid.x &&
-        SHMECKEL.latest.y + SHMECKEL_SIZE_BOX > asteroid.y &&
-        SHMECKEL.latest.y - SHMECKEL_SIZE_BOX < asteroid.y)
+        SHMECKEL.latest.x + SHMECKEL_SIZE_BOX > scissors.x &&
+        SHMECKEL.latest.x - SHMECKEL_SIZE_BOX < scissors.x &&
+        SHMECKEL.latest.y + SHMECKEL_SIZE_BOX > scissors.y &&
+        SHMECKEL.latest.y - SHMECKEL_SIZE_BOX < scissors.y)
         {
-          // Destroy asteroid
-          asteroid.remove = true;
+          // Destroy scissors
+          scissors.remove = true;
           SHMECKEL.health = SHMECKEL.health - 1;
           hit = true;
         }
@@ -62,8 +58,8 @@ function spaceShipAsteroidCollisionCheck() {
 
     if (hit) {
       SCISSORS.scissors = SCISSORS.scissors.filter(
-        (asteroid) => {
-        return (asteroid.remove == false);
+        (scissors) => {
+        return (scissors.remove == false);
       });
 
       if (SHMECKEL.health < 0) {
@@ -83,16 +79,16 @@ function spaceShipAsteroidCollisionCheck() {
 function bulletAsteroidCollisionCheck() {
     var collision = false;
     SHMECKEL.bullets.forEach(function(bullet, index, object) {
-      SCISSORS.scissors.forEach(function(asteroid) {
-        var asteroidSize = SCISSORS.pixelScaleBySize * asteroid.size / 2;
+      SCISSORS.scissors.forEach(function(scissors) {
+        var scissorsSize = SCISSORS.pixelScaleBySize * scissors.size / 2;
         var bulletSize = bullet.bulletSize;
         if (
-          asteroid.x + asteroidSize > bullet.x &&
-          asteroid.x - asteroidSize < bullet.x &&
-          asteroid.y + asteroidSize > bullet.y &&
-          asteroid.y - asteroidSize < bullet.y) {
+          scissors.x + scissorsSize > bullet.x &&
+          scissors.x - scissorsSize < bullet.x &&
+          scissors.y + scissorsSize > bullet.y &&
+          scissors.y - scissorsSize < bullet.y) {
           bullet.remove = true;
-          asteroid.remove = true;
+          scissors.remove = true;
           collision = true;
         }
       });
@@ -100,8 +96,8 @@ function bulletAsteroidCollisionCheck() {
 
     if (collision) {
       SCISSORS.scissors = SCISSORS.scissors.filter(
-        (asteroid) => {
-        return (asteroid.remove == false);
+        (scissors) => {
+        return (scissors.remove == false);
       });
       SHMECKEL.bullets = SHMECKEL.bullets.filter(
         (bullet) => {
