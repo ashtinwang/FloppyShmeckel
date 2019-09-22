@@ -5,10 +5,10 @@
 function Start() {
 
   // Initialize Spaceship
-  InitializeSpaceship();
+  InitializeShmekel();
 
   // Initialize Asteroids
-  for (var i = 0; i < ASTEROIDS.activeCount; i++) {
-    AddAsteroid();
+  for (var i = 0; i < SCISSORS.activeCount; i++) {
+    AddScissor();
   }
 }

@@ -49,9 +49,6 @@ function spaceShipAsteroidCollisionCheck() {
         SHMECKEL.latest.y + SHMECKEL_SIZE_BOX > scissors.y &&
         SHMECKEL.latest.y - SHMECKEL_SIZE_BOX < scissors.y)
         {
-          // Destroy scissors
-          scissors.remove = true;
-          SHMECKEL.health = SHMECKEL.health - 1;
           hit = true;
         }
     });
@@ -71,61 +68,27 @@ function spaceShipAsteroidCollisionCheck() {
       GAME.level++;
       SCISSORS.activeCount++;
       for (var i = 0; i < SCISSORS.activeCount; i++) {
-        AddAsteroid();
+        AddScissor();
       }
     }
-}
-
-function bulletAsteroidCollisionCheck() {
-    var collision = false;
-    SHMECKEL.bullets.forEach(function(bullet, index, object) {
-      SCISSORS.scissors.forEach(function(scissors) {
-        var scissorsSize = SCISSORS.pixelScaleBySize * scissors.size / 2;
-        var bulletSize = bullet.bulletSize;
-        if (
-          scissors.x + scissorsSize > bullet.x &&
-          scissors.x - scissorsSize < bullet.x &&
-          scissors.y + scissorsSize > bullet.y &&
-          scissors.y - scissorsSize < bullet.y) {
-          bullet.remove = true;
-          scissors.remove = true;
-          collision = true;
-        }
-      });
-    });
-
-    if (collision) {
-      SCISSORS.scissors = SCISSORS.scissors.filter(
-        (scissors) => {
-        return (scissors.remove == false);
-      });
-      SHMECKEL.bullets = SHMECKEL.bullets.filter(
-        (bullet) => {
-        return (bullet.remove == false);
-      });
-    }
-
 }
 
 function runGame() {
   var canvas = document.getElementById('mainCanvas');
   var context = canvas.getContext('2d');
   if (GAME.started) {
-    handleShipAnimation();
-    handleBulletAnimation();
-    handleAsteroidAnimation();
+    handleShmeckelAnimation();
+    handleScissorAnimation();
 
     // Check for collisions
-    spaceShipAsteroidCollisionCheck();
-    bulletAsteroidCollisionCheck();
+    ShmeckelScissorCollisionCheck();
 
     context.clearRect(0, 0, 600, 300);
-    RenderSpaceship(context);
-    RenderBullets(context);
-    RenderAsteroids(context);
+    RenderShmeckel(context);
+    RenderScissors(context);
   } else {
     context.font = "30px Arial";
-    context.fillText("Game Over      Level " + GAME.level, 135, 200);
+    context.fillText("Game Over      Age " + GAME.level, 135, 200);
   }
   window.requestAnimationFrame(runGame);
 

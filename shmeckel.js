@@ -1,12 +1,12 @@
 
 // Create a global variable for the spaceship
-var SHMECKEL;
+
 
 function InitializeShmeckel() {
   var canvas = document.getElementById('mainCanvas');
   var context = canvas.getContext('2d');
   context.scale(1,1);
-  SHMECKEL = {
+  var SHMECKEL = {
     x : 300,
     y : 150,
     latest : {

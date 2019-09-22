@@ -12,20 +12,8 @@ var CONTROLS = {
 
 document.addEventListener('keydown', function(event) {
   switch (event.key) {
-    case "ArrowUp":
-      CONTROLS.ship.forward = true;
-      break;
-    case "ArrowDown":
-      CONTROLS.ship.backward = true;
-      break;
-    case "ArrowLeft":
-      CONTROLS.ship.rotateCounterClockwise = true;
-      break;
-    case "ArrowRight":
-      CONTROLS.ship.rotateClockwise = true;
-      break;
     case " ":
-      CONTROLS.fire.active = true;
+      CONTROLS.shmeckel.up = true;
       break;
     default:
       break;
@@ -35,20 +23,8 @@ document.addEventListener('keydown', function(event) {
 
 document.addEventListener('keyup', function(event) {
   switch (event.key) {
-    case "ArrowUp":
-      CONTROLS.ship.forward = false;
-      break;
-    case "ArrowDown":
-      CONTROLS.ship.backward = false;
-      break;
-    case "ArrowLeft":
-      CONTROLS.ship.rotateCounterClockwise = false;
-      break;
-    case "ArrowRight":
-      CONTROLS.ship.rotateClockwise = false;
-      break;
     case " ":
-      CONTROLS.fire.active = false;
+      CONTROLS.shmeckel.up = false;
       break;
     default:
       break;
