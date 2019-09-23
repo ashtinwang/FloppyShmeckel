@@ -7,9 +7,9 @@ var shmeckel = new Image();
 var scissorNorth = new Image();
 var scissorSouth = new Image();
 
-shmeckel.src = "images/shmeckel.png";
-scissorNorth.src = "FloppyShmeckel/scissornorth.jpg";
-scissorSouth.src = "FloppyShmeckel/scissorsouth.jpg";
+shmeckel.src = "replaceme.jpg";
+scissorNorth.src = "scissornorth.jpg";
+scissorSouth.src = "scissorsouth.jpg";
 
 // some variables
 
@@ -63,15 +63,13 @@ function draw(){
         // detect collision
 
         if( bX + shmeckel.width >= scissor[i].x && bX <= scissor[i].x + scissorNorth.width && (bY <= scissor[i].y + scissorNorth.height || bY+shmeckel.height >= scissor[i].y+constant) || bY + shmeckel.height >=  cvs.height){
-            location.reload(); // reload the page
+            //location.reload(); // reload the page
         }
 
         if(scissor[i].x == 5){
             score++;
             scor.play();
         }
-
-
     }
 
     ctx.drawImage(shmeckel,bX,bY);

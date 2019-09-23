@@ -9,6 +9,8 @@ Try to avoid using a graphic image for the shmeckel. A cartoon shmeckel will pro
 GUY's NOTES.
 
 
-This is Dean's stupid idea.  Please don't hold me accountable for any of it.  Essentially I have provided you with two scissor sprites and working code that I got from the internet.  All you need to do is add a shmeckel sprite, which needs to be sourced in the project folder.  Everything else works.  Please do not ask me what a shmeckel is.  I don't want to talk about it.  Ask Dean instead.
+This is Dean's stupid idea.  Please don't hold me accountable for any of it.  Essentially I have provided you with two scissor sprites and working code that I got from the internet.  All you need to do is add a shmeckel sprite, which needs to be sourced in the project folder.  Replace replacme.jpg. Please do not ask me what a shmeckel is.  I don't want to talk about it.  Ask Dean instead.
+
+Also, the program crashes every second because of a glitch.
 
 -Guy
