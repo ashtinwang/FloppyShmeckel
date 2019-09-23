@@ -2,19 +2,8 @@ function handleShmeckelAnimation() {
   if (CONTROLS.shmeckel.up) {
     SHMECKEL.y += SHMECKEL.speed;
   }
-  if (CONTROLS.ship.down) {
+  if (CONTROLS.shmeckel.down) {
     SHMECKEL.y -=  SHMECKEL.speed;
-  }
-
-  // Check if scissors is leaving the boundary, if so, switch sides
-  if (SHMECKEL.x > GAME.canvas.width) {
-    SHMECKEL.x = 0;
-  } else if (SHMECKEL.x < 0) {
-    SHMECKEL.x = 600;
-  } else if (SHMECKEL.y > GAME.canvas.height) {
-    SHMECKEL.y = 0;
-  } else if (SHMECKEL.y < 0) {
-    SHMECKEL.y = 300;
   }
 }
 
@@ -23,22 +12,14 @@ function handleScissorAnimation() {
 
         // Move the scissors forwar
           scissors.x += SCISSORS.baseSpeed;
-
-          // Check if scissors is leaving the boundary, if so, switch sides
-          if (scissors.x > GAME.canvas.width) {
-            scissors.x = 0;
-          } else if (scissors.x < 0) {
-            scissors.x = 600;
-          } else if (scissors.y > GAME.canvas.height) {
-            scissors.y = 0;
-          } else if (scissors.y < 0) {
-            scissors.y = 300;
+          // Check if scissors is leaving the boundary, if so, remove
+          if (scissors.x < 0) {
+            scissors.remove = true;
           }
-    });
-
+    }
 }
 
-function spaceShipAsteroidCollisionCheck() {
+function shmeckelScissorCollisionCheck() {
     var SHMECKEL_SIZE_BOX = 15; // 10px;
     var hit = false;
 
