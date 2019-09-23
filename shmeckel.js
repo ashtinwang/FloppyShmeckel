@@ -1,51 +1,89 @@
+var cvs = document.getElementById("mainCanvas");
+var ctx = cvs.getContext('2d');
 
-// Create a global variable for the spaceship
+// load images
 
+var shmeckel = new Image();
+var scissorNorth = new Image();
+var scissorSouth = new Image();
 
-function InitializeShmeckel() {
-  var canvas = document.getElementById('mainCanvas');
-  var context = canvas.getContext('2d');
-  context.scale(1,1);
-  var SHMECKEL = {
-    x : 300,
-    y : 150,
-    latest : {
-        x : SHMECKEL.x,
-        y : SHMECKEL.y,
-    },
-    scale : 5,
-    initialized : true
-  };
+shmeckel.src = "images/shmeckel.png";
+scissorNorth.src = "FloppyShmeckel/scissornorth.jpg";
+scissorSouth.src = "FloppyShmeckel/scissorsouth.jpg";
+
+// some variables
+
+var gap = 85;
+var constant;
+
+var bX = 10;
+var bY = 150;
+
+var gravity = 1.5;
+
+var score = 0;
+
+// on key down
+
+document.addEventListener("keydown",moveUp);
+
+function moveUp(){
+    bY -= 25;
+    fly.play();
 }
-// RotateAroundOrigin
-// x, y     :   The coordinates of point to be rotatedPoint
-// angle    :   Angle in degrees of rotation
-function RotateAroundOrigin(x, y, angle) {
-  return Rotate(0, 0, x, y, angle);
+
+// scissor coordinates
+
+var scissor = [];
+
+scissor[0] = {
+    x : cvs.width,
+    y : 0
+};
+
+// draw images
+
+function draw(){
+
+    for(var i = 0; i < scissor.length; i++){
+
+        constant = scissorNorth.height+gap;
+        ctx.drawImage(scissorNorth,scissor[i].x,scissor[i].y);
+        ctx.drawImage(scissorSouth,scissor[i].x,scissor[i].y+constant);
+
+        scissor[i].x--;
+
+        if( scissor[i].x == 125 ){
+            scissor.push({
+                x : cvs.width,
+                y : Math.floor(Math.random()*scissorNorth.height)-scissorNorth.height
+            });
+        }
+
+        // detect collision
+
+        if( bX + shmeckel.width >= scissor[i].x && bX <= scissor[i].x + scissorNorth.width && (bY <= scissor[i].y + scissorNorth.height || bY+shmeckel.height >= scissor[i].y+constant) || bY + shmeckel.height >=  cvs.height){
+            location.reload(); // reload the page
+        }
+
+        if(scissor[i].x == 5){
+            score++;
+            scor.play();
+        }
+
+
+    }
+
+    ctx.drawImage(shmeckel,bX,bY);
+
+    bY += gravity;
+
+    ctx.fillStyle = "#000";
+    ctx.font = "20px Verdana";
+    ctx.fillText("Age : "+score,10,cvs.height-20);
+
+    requestAnimationFrame(draw);
+
 }
 
-/**  RenderSpaceship
- *
- *  Renders all spaceship points after adjusting them for the rotation and position
- *    in space
- */
-function RenderShmeckel(context) {
-  if (!SHMECKEL.initialized) {
-    return;
-  }\
-  context.moveTo(SHMECKEL.x ,SHMECKEL.y);
-  SHMECKEL.latest.x = SHMECKEL.x;
-  SHMECKEL.latest.y = SHMECKEL.y;
-  // Begin rendering the space ship points (rotating them each time)
-  context.beginPath();
-  for (var i = 0; i < SHMECKEL.positions.length; i++) {
-    var rotatedPoint = RotateAroundOrigin(
-      SHMECKEL.positions[i].x,
-      SHMECKEL.positions[i].y,
-    );
-    context.lineTo(
-      SHMECKEL.x + (rotatedPoint[0] * SHMECKEL.scale),
-      SHMECKEL.y + (rotatedPoint[1] * SHMECKEL.scale)
-    );
-  }
-}
+draw();
